@@ -1,5 +1,5 @@
-"use client";
 import Image from "next/image";
+import WorkoutActions from "../../components/WorkoutActions";
 
 export default async function WorkoutDetails({ params }) {
     const { id } = await params;
@@ -123,17 +123,8 @@ export default async function WorkoutDetails({ params }) {
                         </div>
 
                         {/* Buttons */}
-                        <div className="mt-7 flex flex-wrap gap-3">
+                        <WorkoutActions workout={workout} />
 
-                            <button className="rounded-md bg-[#ccff00] px-5 py-3 text-xs font-extrabold uppercase text-black transition hover:bg-[#d9ff4d]">
-                                Add to today's plan
-                            </button>
-
-                            <button className="rounded-md border border-[#444] px-5 py-3 text-xs font-extrabold uppercase text-white transition hover:border-[#ccff00]">
-                                Save for later
-                            </button>
-
-                        </div>
                     </div>
                 </div>
 
