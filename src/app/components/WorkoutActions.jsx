@@ -6,12 +6,19 @@ export default function WorkoutActions({ workout }) {
             localStorage.getItem("fitlog-plan") || "[]"
         );
 
+        // Already added?
         const alreadyAdded = oldPlan.some(
             (item) => item.id === workout.id
         );
 
         if (alreadyAdded) {
             alert("Already added to today's plan");
+            return;
+        }
+
+        // Maximum 5 workouts
+        if (oldPlan.length >= 5) {
+            alert("You can add maximum 5 workouts to today's plan");
             return;
         }
 
