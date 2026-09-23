@@ -28,8 +28,8 @@ export default function Navbar() {
                     <Link
                         href="/"
                         className={`rounded-full px-4 py-1.5 text-[11px] font-semibold transition ${pathname === "/"
-                                ? "bg-[#1b2700] text-[#ccff00]"
-                                : "text-zinc-400 hover:text-white"
+                            ? "bg-[#1b2700] text-[#ccff00]"
+                            : "text-zinc-400 hover:text-white"
                             }`}
                     >
                         Workouts
@@ -38,8 +38,8 @@ export default function Navbar() {
                     <Link
                         href="/my-plan"
                         className={`rounded-full px-4 py-1.5 text-[11px] font-semibold transition ${pathname === "/my-plan"
-                                ? "bg-[#1b2700] text-[#ccff00]"
-                                : "text-zinc-400 hover:text-white"
+                            ? "bg-[#1b2700] text-[#ccff00]"
+                            : "text-zinc-400 hover:text-white"
                             }`}
                     >
                         My Plan
