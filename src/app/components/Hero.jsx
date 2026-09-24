@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Hero() {
     return (
-        <section className="mx-auto mt-7 w-full max-w-6xl overflow-hidden rounded-lg border border-[#25272d] bg-[#15171c]">
-            <div className="flex min-h-[268px] flex-col justify-between px-6 py-7 sm:px-8 md:flex-row md:items-center md:px-9 md:py-6 lg:px-9">
+        <section className="mx-auto mt-7 w-full max-w-7xl overflow-hidden rounded-lg border border-[#25272d] bg-[#15171c]">
+            <div className="flex min-h-[400px] flex-col justify-between px-6 py-7 sm:px-8 md:flex-row md:items-center md:px-9 md:py-6 lg:px-9">
 
                 {/* Left Content */}
                 <div className="relative z-10 max-w-xl">
@@ -50,13 +50,13 @@ export default function Hero() {
                 </div>
 
                 {/* Hero Image */}
-                <div className="relative mx-auto mt-6 h-[170px] w-[210px] shrink-0 sm:h-[190px] sm:w-[235px] md:mx-0 md:mt-0 md:h-[215px] md:w-[270px] lg:h-[230px] lg:w-[290px]">
+                <div className="relative mx-auto mt-6 h-[220px] w-[280px] shrink-0 sm:h-[240px] sm:w-[320px] md:mx-0 md:mt-0 md:h-[270px] md:w-[350px] lg:h-[290px] lg:w-[390px]">
                     <Image
                         src="/banner.png"
                         alt="Workout illustration"
                         fill
                         priority
-                        sizes="(max-width: 640px) 210px, (max-width: 768px) 270px, 290px"
+                        sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, 390px"
                         className="object-contain"
                     />
                 </div>
