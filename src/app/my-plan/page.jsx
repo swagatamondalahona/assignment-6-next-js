@@ -176,8 +176,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("plan")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "plan"
-                                    ? "bg-[#252727] text-white"
-                                    : "text-[#777] hover:text-white"
+                                ? "bg-[#252727] text-white"
+                                : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Today's Plan
@@ -186,8 +186,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("saved")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "saved"
-                                    ? "bg-[#252727] text-white"
-                                    : "text-[#777] hover:text-white"
+                                ? "bg-[#252727] text-white"
+                                : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Saved
@@ -232,8 +232,8 @@ export default function MyPlanPage() {
                 </div>
 
                 {/* Workout List */}
+                {/* Workout List */}
                 <div className="mt-5">
-
                     {sortedList.length === 0 ? (
                         <div className="flex min-h-[230px] flex-col items-center justify-center rounded-xl border border-[#202323] bg-[#0d0f0f] px-4 text-center">
 
@@ -256,144 +256,152 @@ export default function MyPlanPage() {
 
                         </div>
                     ) : (
-                        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+                        // Workout rows
+                        <div className="space-y-3">
 
                             {sortedList.map((workout) => {
-                                const isDone = completed.includes(
-                                    workout.id
-                                );
+
+                                const isDone = completed.includes(workout.id);
 
                                 return (
                                     <div
                                         key={workout.id}
-                                        className={`overflow-hidden rounded-xl border bg-[#111313] transition ${isDone
+                                        className={`flex flex-col gap-4 rounded-xl border bg-[#111313] p-3 transition sm:flex-row sm:items-center sm:justify-between sm:p-4 ${isDone
                                                 ? "border-[#ccff00]"
                                                 : "border-[#242727]"
                                             }`}
                                     >
 
-                                        {/* Image */}
-                                        <img
-                                            src={workout.image}
-                                            alt={workout.name}
-                                            className="h-48 w-full object-cover"
-                                        />
+                                        {/* Left Side */}
+                                        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
 
-                                        {/* Content */}
-                                        <div className="p-4">
+                                            {/* Workout Image */}
+                                            <img
+                                                src={workout.image}
+                                                alt={workout.name}
+                                                className="h-14 w-20 shrink-0 rounded-lg object-cover sm:h-16 sm:w-24"
+                                            />
 
-                                            {/* Title */}
-                                            <div className="flex items-start justify-between gap-3">
+                                            {/* Workout Information */}
+                                            <div className="min-w-0 flex-1">
 
-                                                <h2
-                                                    className={`text-sm font-extrabold uppercase ${isDone
-                                                            ? "text-[#ccff00]"
-                                                            : "text-white"
-                                                        }`}
-                                                >
-                                                    {workout.name}
-                                                </h2>
+                                                {/* Title */}
+                                                <div className="flex items-center gap-2">
 
-                                                {isDone && (
-                                                    <span className="flex items-center gap-1 rounded-full bg-[#ccff00] px-2 py-1 text-[8px] font-extrabold text-black">
-                                                        <Check size={10} />
-                                                        DONE
-                                                    </span>
-                                                )}
+                                                    <h2
+                                                        className={`truncate text-xs font-extrabold uppercase sm:text-sm ${isDone
+                                                                ? "text-[#ccff00]"
+                                                                : "text-white"
+                                                            }`}
+                                                    >
+                                                        {workout.name}
+                                                    </h2>
+
+                                                    {isDone && (
+                                                        <span className="hidden items-center gap-1 rounded-full bg-[#ccff00] px-2 py-1 text-[8px] font-extrabold text-black sm:flex">
+                                                            <Check size={10} />
+                                                            DONE
+                                                        </span>
+                                                    )}
+
+                                                </div>
+
+                                                {/* Equipment */}
+                                                <p className="mt-1 text-[9px] text-[#666] sm:text-[10px]">
+                                                    {workout.equipment}
+                                                </p>
+
+                                                {/* Workout Stats */}
+                                                <div className="mt-2 flex flex-wrap gap-3 text-[9px] text-[#777] sm:text-[10px]">
+
+                                                    <div className="flex items-center gap-1">
+                                                        <Dumbbell size={11} />
+                                                        <span>
+                                                            {workout.equipment}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-1">
+                                                        <Clock3 size={11} />
+                                                        <span>
+                                                            {workout.duration} min
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-1">
+                                                        <Flame size={11} />
+                                                        <span>
+                                                            {workout.caloriesBurned} kcal
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-1">
+                                                        <Star size={11} />
+                                                        <span>
+                                                            {workout.rating}
+                                                        </span>
+                                                    </div>
+
+                                                </div>
 
                                             </div>
+                                        </div>
 
-                                            {/* Workout Stats */}
-                                            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#262626] pt-3 text-[10px] text-[#777]">
 
-                                                <div className="flex items-center gap-1.5">
-                                                    <Dumbbell size={13} />
-                                                    <span>
-                                                        {workout.equipment}
-                                                    </span>
-                                                </div>
+                                        {/* Right Side - Buttons */}
+                                        <div className="flex shrink-0 items-center gap-2">
 
-                                                <div className="flex items-center gap-1.5">
-                                                    <Clock3 size={13} />
-                                                    <span>
-                                                        {workout.duration} min
-                                                    </span>
-                                                </div>
+                                            {/* View Details */}
+                                            <Link
+                                                href={`/workouts/${workout.id}`}
+                                                className="rounded-full border border-[#30343c] px-3 py-2 text-[8px] font-medium text-[#aaa] transition hover:border-[#777] hover:text-white sm:px-4 sm:text-[9px]"
+                                            >
+                                                View Details
+                                            </Link>
 
-                                                <div className="flex items-center gap-1.5">
-                                                    <Flame size={13} />
-                                                    <span>
-                                                        {workout.caloriesBurned} kcal
-                                                    </span>
-                                                </div>
 
-                                                <div className="flex items-center gap-1.5">
-                                                    <Star size={13} />
-                                                    <span>
-                                                        {workout.rating}
-                                                    </span>
-                                                </div>
-
-                                            </div>
-
-                                            {/* Buttons */}
-                                            <div className="mt-4 flex flex-wrap gap-2">
-
-                                                {/* View Details */}
-                                                <Link
-                                                    href={`/workouts/${workout.id}`}
-                                                    className="flex items-center gap-1.5 rounded-md border border-[#444] px-3 py-2 text-[9px] font-bold uppercase text-white transition hover:border-[#ccff00]"
-                                                >
-                                                    View Details
-                                                </Link>
-
-                                                {activeTab === "plan" ? (
-                                                    <>
-                                                        {/* Mark Done */}
-                                                        <button
-                                                            onClick={() =>
-                                                                handleDone(
-                                                                    workout.id
-                                                                )
-                                                            }
-                                                            className="flex items-center gap-1.5 rounded-md bg-[#ccff00] px-3 py-2 text-[9px] font-extrabold uppercase text-black"
-                                                        >
-                                                            <Check size={12} />
-
-                                                            {isDone
-                                                                ? "Undo Done"
-                                                                : "Mark as Done"}
-                                                        </button>
-
-                                                        {/* Remove */}
-                                                        <button
-                                                            onClick={() =>
-                                                                handleRemove(
-                                                                    workout.id
-                                                                )
-                                                            }
-                                                            className="flex items-center gap-1.5 rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
-                                                        >
-                                                            <X size={12} />
-                                                            Remove
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    /* Saved Remove */
+                                            {/* Today's Plan */}
+                                            {activeTab === "plan" && (
+                                                <>
+                                                    {/* Mark as Done */}
                                                     <button
                                                         onClick={() =>
-                                                            handleRemoveSaved(
-                                                                workout.id
-                                                            )
+                                                            handleDone(workout.id)
                                                         }
-                                                        className="flex items-center gap-1.5 rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
+                                                        className="flex items-center gap-1 rounded-full bg-[#ccff00] px-3 py-2 text-[8px] font-extrabold text-black transition hover:bg-[#bbed00] sm:px-4 sm:text-[9px]"
                                                     >
-                                                        <X size={12} />
-                                                        Remove
-                                                    </button>
-                                                )}
+                                                        <Check size={11} />
 
-                                            </div>
+                                                        {isDone
+                                                            ? "Undo Done"
+                                                            : "Mark as Done"}
+                                                    </button>
+
+                                                    {/* Remove */}
+                                                    <button
+                                                        onClick={() =>
+                                                            handleRemove(workout.id)
+                                                        }
+                                                        className="flex h-7 w-7 items-center justify-center rounded-full text-[#666] transition hover:bg-[#252727] hover:text-white"
+                                                    >
+                                                        <X size={14} />
+                                                    </button>
+                                                </>
+                                            )}
+
+
+                                            {/* Saved Tab Remove */}
+                                            {activeTab === "saved" && (
+                                                <button
+                                                    onClick={() =>
+                                                        handleRemoveSaved(workout.id)
+                                                    }
+                                                    className="flex h-7 w-7 items-center justify-center rounded-full text-[#666] transition hover:bg-[#252727] hover:text-white"
+                                                >
+                                                    <X size={14} />
+                                                </button>
+                                            )}
 
                                         </div>
 
@@ -403,7 +411,6 @@ export default function MyPlanPage() {
 
                         </div>
                     )}
-
                 </div>
 
             </div>
