@@ -3,7 +3,7 @@ import WorkoutCard from "./WorkoutCard";
 async function getWorkouts() {
     try {
         const res = await fetch(
-            process.env.NEXT_PUBLIC_SERVER_BASE_URL
+            `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/fitlog`
         );
 
         if (!res.ok) {
