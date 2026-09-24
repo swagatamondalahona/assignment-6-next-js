@@ -2,12 +2,22 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+    Clock3,
+    Flame,
+    Star,
+    Dumbbell,
+    Check,
+    X,
+    ChevronDown,
+} from "lucide-react";
 
 export default function MyPlanPage() {
     const [plan, setPlan] = useState([]);
     const [saved, setSaved] = useState([]);
     const [activeTab, setActiveTab] = useState("plan");
-    const [sort, setSort] = useState("newest");
+    const [sort, setSort] = useState("duration");
     const [completed, setCompleted] = useState([]);
 
     useEffect(() => {
@@ -31,11 +41,19 @@ export default function MyPlanPage() {
     const currentList = activeTab === "plan" ? plan : saved;
 
     const sortedList = [...currentList].sort((a, b) => {
-        if (sort === "oldest") {
-            return a.id - b.id;
+        if (sort === "duration") {
+            return a.duration - b.duration;
         }
 
-        return b.id - a.id;
+        if (sort === "calories") {
+            return a.caloriesBurned - b.caloriesBurned;
+        }
+
+        if (sort === "rating") {
+            return b.rating - a.rating;
+        }
+
+        return 0;
     });
 
     const totalMinutes = plan.reduce(
@@ -59,10 +77,14 @@ export default function MyPlanPage() {
             "fitlog-plan",
             JSON.stringify(updatedPlan)
         );
+
+        toast.success("Workout removed from today's plan");
     };
 
     const handleDone = (id) => {
-        const updatedCompleted = completed.includes(id)
+        const isAlreadyDone = completed.includes(id);
+
+        const updatedCompleted = isAlreadyDone
             ? completed.filter((item) => item !== id)
             : [...completed, id];
 
@@ -72,6 +94,12 @@ export default function MyPlanPage() {
             "fitlog-completed",
             JSON.stringify(updatedCompleted)
         );
+
+        if (isAlreadyDone) {
+            toast.info("Workout marked as not done");
+        } else {
+            toast.success("Workout marked as done");
+        }
     };
 
     const handleRemoveSaved = (id) => {
@@ -85,6 +113,8 @@ export default function MyPlanPage() {
             "fitlog-saved",
             JSON.stringify(updatedSaved)
         );
+
+        toast.success("Workout removed from saved");
     };
 
     return (
@@ -105,7 +135,6 @@ export default function MyPlanPage() {
                 {/* Stats */}
                 <div className="mt-6 grid grid-cols-3 gap-3 sm:gap-4">
 
-                    {/* Exercises */}
                     <div className="rounded-xl border border-[#242727] bg-[#111313] p-4 sm:p-5">
                         <p className="text-[9px] font-medium uppercase tracking-wide text-[#777] sm:text-xs">
                             Exercises
@@ -116,7 +145,6 @@ export default function MyPlanPage() {
                         </p>
                     </div>
 
-                    {/* Minutes */}
                     <div className="rounded-xl border border-[#242727] bg-[#111313] p-4 sm:p-5">
                         <p className="text-[9px] font-medium uppercase tracking-wide text-[#777] sm:text-xs">
                             Minutes
@@ -127,7 +155,6 @@ export default function MyPlanPage() {
                         </p>
                     </div>
 
-                    {/* Calories */}
                     <div className="rounded-xl border border-[#242727] bg-[#111313] p-4 sm:p-5">
                         <p className="text-[9px] font-medium uppercase tracking-wide text-[#777] sm:text-xs">
                             Calories
@@ -141,7 +168,7 @@ export default function MyPlanPage() {
                 </div>
 
                 {/* Tabs + Sort */}
-                <div className="mt-6 flex items-center justify-between">
+                <div className="mt-6 flex items-center justify-between gap-3">
 
                     {/* Tabs */}
                     <div className="flex rounded-md border border-[#252828] bg-[#111313] p-1">
@@ -149,8 +176,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("plan")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "plan"
-                                ? "bg-[#252727] text-white"
-                                : "text-[#777] hover:text-white"
+                                    ? "bg-[#252727] text-white"
+                                    : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Today's Plan
@@ -159,8 +186,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("saved")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "saved"
-                                ? "bg-[#252727] text-white"
-                                : "text-[#777] hover:text-white"
+                                    ? "bg-[#252727] text-white"
+                                    : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Saved
@@ -175,14 +202,30 @@ export default function MyPlanPage() {
                             Sort by
                         </span>
 
-                        <select
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                            className="rounded-md border border-[#252828] bg-[#111313] px-2 py-1.5 text-[10px] text-[#aaa] outline-none sm:text-xs"
-                        >
-                            <option value="newest">Newest</option>
-                            <option value="oldest">Oldest</option>
-                        </select>
+                        <div className="relative">
+                            <select
+                                value={sort}
+                                onChange={(e) => setSort(e.target.value)}
+                                className="appearance-none rounded-md border border-[#252828] bg-[#111313] py-1.5 pl-2 pr-8 text-[10px] text-[#aaa] outline-none sm:text-xs"
+                            >
+                                <option value="duration">
+                                    Duration
+                                </option>
+
+                                <option value="calories">
+                                    Calories
+                                </option>
+
+                                <option value="rating">
+                                    Rating
+                                </option>
+                            </select>
+
+                            <ChevronDown
+                                size={13}
+                                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#777]"
+                            />
+                        </div>
 
                     </div>
 
@@ -200,7 +243,7 @@ export default function MyPlanPage() {
 
                             <p className="mt-2 max-w-sm text-[9px] leading-4 text-[#666] sm:text-xs">
                                 {activeTab === "plan"
-                                    ? "Browse the library and add your first workout to your plan."
+                                    ? "Browse the library and add a lift to get today moving."
                                     : "Save a workout for later and it will appear here."}
                             </p>
 
@@ -216,14 +259,16 @@ export default function MyPlanPage() {
                         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
                             {sortedList.map((workout) => {
-                                const isDone = completed.includes(workout.id);
+                                const isDone = completed.includes(
+                                    workout.id
+                                );
 
                                 return (
                                     <div
                                         key={workout.id}
                                         className={`overflow-hidden rounded-xl border bg-[#111313] transition ${isDone
-                                            ? "border-[#ccff00]"
-                                            : "border-[#242727]"
+                                                ? "border-[#ccff00]"
+                                                : "border-[#242727]"
                                             }`}
                                     >
 
@@ -237,71 +282,113 @@ export default function MyPlanPage() {
                                         {/* Content */}
                                         <div className="p-4">
 
+                                            {/* Title */}
                                             <div className="flex items-start justify-between gap-3">
 
                                                 <h2
                                                     className={`text-sm font-extrabold uppercase ${isDone
-                                                        ? "text-[#ccff00]"
-                                                        : "text-white"
+                                                            ? "text-[#ccff00]"
+                                                            : "text-white"
                                                         }`}
                                                 >
                                                     {workout.name}
                                                 </h2>
 
                                                 {isDone && (
-                                                    <span className="rounded-full bg-[#ccff00] px-2 py-1 text-[8px] font-extrabold text-black">
+                                                    <span className="flex items-center gap-1 rounded-full bg-[#ccff00] px-2 py-1 text-[8px] font-extrabold text-black">
+                                                        <Check size={10} />
                                                         DONE
                                                     </span>
                                                 )}
 
                                             </div>
 
-                                            <p className="mt-2 text-xs text-[#777]">
-                                                {workout.duration} min •{" "}
-                                                {workout.caloriesBurned} kcal
-                                            </p>
+                                            {/* Workout Stats */}
+                                            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#262626] pt-3 text-[10px] text-[#777]">
+
+                                                <div className="flex items-center gap-1.5">
+                                                    <Dumbbell size={13} />
+                                                    <span>
+                                                        {workout.equipment}
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-1.5">
+                                                    <Clock3 size={13} />
+                                                    <span>
+                                                        {workout.duration} min
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-1.5">
+                                                    <Flame size={13} />
+                                                    <span>
+                                                        {workout.caloriesBurned} kcal
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-1.5">
+                                                    <Star size={13} />
+                                                    <span>
+                                                        {workout.rating}
+                                                    </span>
+                                                </div>
+
+                                            </div>
 
                                             {/* Buttons */}
                                             <div className="mt-4 flex flex-wrap gap-2">
 
+                                                {/* View Details */}
                                                 <Link
                                                     href={`/workouts/${workout.id}`}
-                                                    className="rounded-md border border-[#444] px-3 py-2 text-[9px] font-bold uppercase text-white transition hover:border-[#ccff00]"
+                                                    className="flex items-center gap-1.5 rounded-md border border-[#444] px-3 py-2 text-[9px] font-bold uppercase text-white transition hover:border-[#ccff00]"
                                                 >
                                                     View Details
                                                 </Link>
 
                                                 {activeTab === "plan" ? (
                                                     <>
+                                                        {/* Mark Done */}
                                                         <button
                                                             onClick={() =>
-                                                                handleDone(workout.id)
+                                                                handleDone(
+                                                                    workout.id
+                                                                )
                                                             }
-                                                            className="rounded-md bg-[#ccff00] px-3 py-2 text-[9px] font-extrabold uppercase text-black"
+                                                            className="flex items-center gap-1.5 rounded-md bg-[#ccff00] px-3 py-2 text-[9px] font-extrabold uppercase text-black"
                                                         >
+                                                            <Check size={12} />
+
                                                             {isDone
                                                                 ? "Undo Done"
                                                                 : "Mark as Done"}
                                                         </button>
 
+                                                        {/* Remove */}
                                                         <button
                                                             onClick={() =>
-                                                                handleRemove(workout.id)
+                                                                handleRemove(
+                                                                    workout.id
+                                                                )
                                                             }
-                                                            className="rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
+                                                            className="flex items-center gap-1.5 rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
                                                         >
+                                                            <X size={12} />
                                                             Remove
                                                         </button>
                                                     </>
                                                 ) : (
+                                                    /* Saved Remove */
                                                     <button
                                                         onClick={() =>
                                                             handleRemoveSaved(
                                                                 workout.id
                                                             )
                                                         }
-                                                        className="rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
+                                                        className="flex items-center gap-1.5 rounded-md border border-red-900 px-3 py-2 text-[9px] font-bold uppercase text-red-400"
                                                     >
+                                                        <X size={12} />
                                                         Remove
                                                     </button>
                                                 )}

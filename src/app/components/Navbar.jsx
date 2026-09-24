@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
     const pathname = usePathname();
 
     const [planCount, setPlanCount] = useState(0);
     const [savedCount, setSavedCount] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    useEffect(() => {
+    const updateCounts = () => {
         const plan = JSON.parse(
             localStorage.getItem("fitlog-plan") || "[]"
         );
@@ -21,10 +23,24 @@ export default function Navbar() {
 
         setPlanCount(plan.length);
         setSavedCount(saved.length);
+    };
+
+    useEffect(() => {
+        updateCounts();
+
+        window.addEventListener("storage", updateCounts);
+
+        window.addEventListener("fitlog-update", updateCounts);
+
+        return () => {
+            window.removeEventListener("storage", updateCounts);
+            window.removeEventListener("fitlog-update", updateCounts);
+        };
     }, []);
 
     return (
-        <header className="border-b border-zinc-800 bg-[#0b0d0d] text-white">
+        <header className="relative border-b border-zinc-800 bg-[#0b0d0d] text-white">
+
             <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
 
                 {/* Logo */}
@@ -40,7 +56,7 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                {/* Center Navigation */}
+                {/* Desktop Navigation */}
                 <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 md:flex">
 
                     <Link
@@ -65,9 +81,10 @@ export default function Navbar() {
 
                 </div>
 
-                {/* Plan & Saved */}
+                {/* Right Side */}
                 <div className="flex items-center gap-4 text-[11px]">
 
+                    {/* Plan */}
                     <Link
                         href="/my-plan"
                         className="flex items-center gap-1.5 text-zinc-300"
@@ -79,6 +96,7 @@ export default function Navbar() {
                         </span>
                     </Link>
 
+                    {/* Saved */}
                     <Link
                         href="/my-plan"
                         className="flex items-center gap-1.5 text-zinc-300"
@@ -90,9 +108,53 @@ export default function Navbar() {
                         </span>
                     </Link>
 
+                    {/* Mobile Menu */}
+                    <button
+                        type="button"
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        className="flex items-center justify-center text-white md:hidden"
+                        aria-label="Toggle navigation menu"
+                    >
+                        {menuOpen ? (
+                            <X size={20} />
+                        ) : (
+                            <Menu size={20} />
+                        )}
+                    </button>
+
                 </div>
 
             </nav>
+
+            {/* Mobile Dropdown */}
+            {menuOpen && (
+                <div className="absolute right-0 top-full z-50 w-40 overflow-hidden rounded-bl-xl rounded-br-xl border border-[#292d2d] bg-[#111313] shadow-xl md:hidden">
+
+                    <Link
+                        href="/"
+                        onClick={() => setMenuOpen(false)}
+                        className={`block px-4 py-3 text-xs font-semibold ${pathname === "/"
+                                ? "bg-[#1b2700] text-[#ccff00]"
+                                : "text-zinc-300 hover:bg-[#1b1d1d] hover:text-white"
+                            }`}
+                    >
+                        Workouts
+                    </Link>
+
+                    <Link
+                        href="/my-plan"
+                        onClick={() => setMenuOpen(false)}
+                        className={`block px-4 py-3 text-xs font-semibold ${pathname === "/my-plan"
+                                ? "bg-[#1b2700] text-[#ccff00]"
+                                : "text-zinc-300 hover:bg-[#1b1d1d] hover:text-white"
+                            }`}
+                    >
+                        My Plan
+                    </Link>
+
+                </div>
+            )}
+
         </header>
     );
 }
