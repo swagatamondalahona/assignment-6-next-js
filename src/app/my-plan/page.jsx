@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -78,6 +79,8 @@ export default function MyPlanPage() {
             JSON.stringify(updatedPlan)
         );
 
+        window.dispatchEvent(new Event("fitlog-update"));
+
         toast.success("Workout removed from today's plan");
     };
 
@@ -113,6 +116,8 @@ export default function MyPlanPage() {
             "fitlog-saved",
             JSON.stringify(updatedSaved)
         );
+
+        window.dispatchEvent(new Event("fitlog-update"));
 
         toast.success("Workout removed from saved");
     };
@@ -176,8 +181,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("plan")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "plan"
-                                ? "bg-[#252727] text-white"
-                                : "text-[#777] hover:text-white"
+                                    ? "bg-[#252727] text-white"
+                                    : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Today's Plan
@@ -186,8 +191,8 @@ export default function MyPlanPage() {
                         <button
                             onClick={() => setActiveTab("saved")}
                             className={`rounded px-4 py-1.5 text-[10px] font-semibold transition sm:text-xs ${activeTab === "saved"
-                                ? "bg-[#252727] text-white"
-                                : "text-[#777] hover:text-white"
+                                    ? "bg-[#252727] text-white"
+                                    : "text-[#777] hover:text-white"
                                 }`}
                         >
                             Saved
@@ -231,7 +236,6 @@ export default function MyPlanPage() {
 
                 </div>
 
-                {/* Workout List */}
                 {/* Workout List */}
                 <div className="mt-5">
                     {sortedList.length === 0 ? (
@@ -348,7 +352,6 @@ export default function MyPlanPage() {
                                             </div>
                                         </div>
 
-
                                         {/* Right Side - Buttons */}
                                         <div className="flex shrink-0 items-center gap-2">
 
@@ -359,7 +362,6 @@ export default function MyPlanPage() {
                                             >
                                                 View Details
                                             </Link>
-
 
                                             {/* Today's Plan */}
                                             {activeTab === "plan" && (
@@ -390,7 +392,6 @@ export default function MyPlanPage() {
                                                 </>
                                             )}
 
-
                                             {/* Saved Tab Remove */}
                                             {activeTab === "saved" && (
                                                 <button
@@ -417,3 +418,4 @@ export default function MyPlanPage() {
         </main>
     );
 }
+
