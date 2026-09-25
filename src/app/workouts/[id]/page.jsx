@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import WorkoutActions from "../../components/WorkoutActions";
 
 export default async function WorkoutDetails({ params }) {
@@ -9,7 +10,7 @@ export default async function WorkoutDetails({ params }) {
     );
 
     if (!response.ok) {
-        throw new Error("Failed to fetch workout");
+        notFound();
     }
 
     const workout = await response.json();
