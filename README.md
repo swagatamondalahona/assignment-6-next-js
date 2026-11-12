@@ -2,6 +2,11 @@
 
 FitLog is a modern workout library that helps users explore different exercises, view workout details, and organize their personal workout plans.
 
+## 📸 Project Screenshot
+
+![FitLog Homepage](public/fitlog-homepage.png)
+
+
 ## Technologies Used
 
 - Next.js
