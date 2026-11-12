@@ -38,9 +38,9 @@ npm run dev
 6. ## 📦 Dependencies
 
 ### Main Dependencies
-- Next.js
-- React
-- React DOM
+- Next.js 16.3.6
+- React 19.2.8
+- React DOM 19.2.8
 - Lucide React
 - React Toastify
 
@@ -49,8 +49,11 @@ npm run dev
 - ESLint
 - ESLint Config Next
 - Babel Plugin React Compiler
-- TypeScript Types (Node.js and React)
-- Tailwind CSS PostCSS
+- @types/node
+- @types/react
+- @tailwindcss/postcss
+
+
 
 
 ## Technologies Used
