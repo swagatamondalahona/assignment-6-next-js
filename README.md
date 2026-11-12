@@ -35,6 +35,22 @@ npm run dev
 ```
 
 5. Open http://localhost:3000 in your browser.
+6. ## 📦 Dependencies
+
+### Main Dependencies
+- Next.js
+- React
+- React DOM
+- Lucide React
+- React Toastify
+
+### Development Dependencies
+- Tailwind CSS
+- ESLint
+- ESLint Config Next
+- Babel Plugin React Compiler
+- TypeScript Types (Node.js and React)
+- Tailwind CSS PostCSS
 
 
 ## Technologies Used
