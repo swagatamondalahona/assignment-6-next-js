@@ -8,6 +8,12 @@ FitLog is a modern workout library that helps users explore different exercises,
 ## 🌐 Live Demo
 
 [Visit FitLog Website](https://assignment-6-next-js-omega.vercel.app/)
+## ⚙️ Installation Instructions
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/swagatamondalahona/assignment-6-next-js.git
 
 
 ## Technologies Used
