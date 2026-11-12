@@ -35,7 +35,7 @@ npm run dev
 ```
 
 5. Open http://localhost:3000 in your browser.
-6. ## 📦 Dependencies
+   ## 📦 Dependencies
 
 ### Main Dependencies
 - Next.js 16.3.6
