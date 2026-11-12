@@ -5,6 +5,9 @@ FitLog is a modern workout library that helps users explore different exercises,
 ## 📸 Project Screenshot
 
 ![FitLog Homepage](public/fitlog-homepage.png)
+## 🌐 Live Demo
+
+[Visit FitLog Website](https://assignment-6-next-js-omega.vercel.app/)
 
 
 ## Technologies Used
