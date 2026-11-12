@@ -14,6 +14,27 @@ FitLog is a modern workout library that helps users explore different exercises,
 
 ```bash
 git clone https://github.com/swagatamondalahona/assignment-6-next-js.git
+```
+
+2. Go to the project folder:
+
+```bash
+cd assignment-6-next-js
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+5. Open http://localhost:3000 in your browser.
 
 
 ## Technologies Used
